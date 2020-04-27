@@ -12,3 +12,15 @@ before_install:
 # -- --coverage prevents the test suite from taking input
 script:
     - docker run -e CI=true callistachang/docker-react npm run test -- --coverage
+
+deploy:
+    provider: elasticbeanstalk
+    region: "us-east-2"
+    app: "docker-react"
+    env: "DockerReact-env"
+    bucket_name: "elasticbeanstalk-us-east-2-804847848812"
+    bucket_path: "docker-react" #same as the app
+    on:
+        branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
