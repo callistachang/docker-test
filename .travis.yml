@@ -1,0 +1,14 @@
+# needs superuser permissions
+sudo: required
+language: generic
+
+services:
+    - docker
+
+# in order to run the test suite, we need to run the dev build
+before_install:
+    - docker build -t callistachang/docker-react -f Dockerfile.dev .
+
+# -- --coverage prevents the test suite from taking input
+script:
+    - docker run -e CI=true callistachang/docker-react npm run test -- --coverage
