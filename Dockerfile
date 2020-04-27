@@ -10,5 +10,8 @@ COPY . .
 RUN npm run build
 
 FROM nginx
+# in the case of AWS elastic beanstalk, it looks specifically
+# for any EXPOSE statements for any ports it should listen to
+EXPOSE 80
 # copies over the result from npm run build to the nginx image
 COPY --from=builder /app/build /usr/share/nginx/html
