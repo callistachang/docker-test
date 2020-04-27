@@ -1,0 +1,15 @@
+# for development purposes
+FROM node:alpine
+
+WORKDIR '/app'
+
+# needed for dependency installation
+COPY package.json .
+RUN npm install
+
+# source to dest
+# this is unnecessary because of volume mounting
+# but it's good to keep it here
+COPY . .
+
+CMD ["npm", "run", "start"]

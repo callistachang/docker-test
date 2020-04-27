@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+    web:
+        stdin_open: true
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        ports:
+            - "3000:3000"
+        # map node_modules from node:alpine
+        # they're sort of references to our local machine
+        # volumes are used for hot reload
+        volumes:
+            # puts a bookmark on the node_modules folder that we deleted
+            # but uploaded in the image
+            - /app/node_modules
+            # take everything in our directory and map it to the /app folder
+            - .:/app
+    tests:
+        stdin_open: true
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        volumes:
+            # puts a bookmark on the node_modules folder that we deleted
+            # but uploaded in the image
+            - /app/node_modules
+            # take everything in our directory and map it to the /app folder
+            - .:/app
+        command: ["npm", "run", "test"]
