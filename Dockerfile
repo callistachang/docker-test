@@ -1,8 +1,8 @@
-FROM node:alpine as builder 
+FROM node:alpine
 
 WORKDIR '/app'
 
-COPY package.json .
+COPY package.json ./
 RUN npm install
 COPY . .
 
@@ -14,4 +14,4 @@ FROM nginx
 # for any EXPOSE statements for any ports it should listen to
 EXPOSE 80
 # copies over the result from npm run build to the nginx image
-COPY --from=builder /app/build /usr/share/nginx/html
+COPY --from=0 /app/build /usr/share/nginx/html
